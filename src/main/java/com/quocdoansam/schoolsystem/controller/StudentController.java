@@ -7,12 +7,17 @@ import com.quocdoansam.schoolsystem.service.StudentService;
 
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @Slf4j
@@ -33,4 +38,29 @@ public class StudentController {
                                 .build());
 
     };
+
+    @GetMapping("/admin/students")
+    public ResponseEntity<BaseResponse<List<StudentResponse>>> getAll() {
+        List<StudentResponse> studentResponses = studentService.getAll();
+        return ResponseEntity.ok(
+                BaseResponse.<List<StudentResponse>>builder()
+                        .success(true)
+                        .statusCode(HttpStatus.OK.value())
+                        .message("Get all students successfully.")
+                        .data(studentResponses)
+                        .build());
+    }
+
+    @GetMapping("/students/{id}")
+    public ResponseEntity<BaseResponse<StudentResponse>> getById(@PathVariable Long id) {
+        StudentResponse studentResponse = studentService.getById(id);
+        return ResponseEntity.ok(
+                BaseResponse.<StudentResponse>builder()
+                        .success(true)
+                        .statusCode(HttpStatus.OK.value())
+                        .message("Get student successfully.")
+                        .data(studentResponse)
+                        .build());
+    }
+
 }
