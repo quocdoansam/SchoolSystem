@@ -5,6 +5,7 @@ import java.util.Set;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.quocdoansam.schoolsystem.dto.request.StudentCreationRequest;
@@ -37,6 +38,8 @@ public class StudentService {
 	StudentMapper studentMapper;
 	@Autowired
 	MajorRepository majorRepository;
+	@Autowired
+	PasswordEncoder passwordEncoder;
 
 	public StudentResponse create(StudentCreationRequest request) {
 		Student student = studentMapper.toStudentCreationRequest(request);
@@ -50,6 +53,9 @@ public class StudentService {
 		Set<String> roles = new HashSet<>();
 		roles.add(Role.STUDENT.name());
 		student.setRoles(roles);
+
+		// Password cryption
+		student.setPassword(passwordEncoder.encode(student.getPassword()));
 
 		return studentMapper.toStudentResponse(studentRepository.save(student));
 	}
