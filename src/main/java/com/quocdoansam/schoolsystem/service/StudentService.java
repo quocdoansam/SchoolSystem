@@ -1,6 +1,6 @@
 package com.quocdoansam.schoolsystem.service;
 
-import java.util.HashSet;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 
@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.quocdoansam.schoolsystem.dto.request.StudentCreationRequest;
+import com.quocdoansam.schoolsystem.dto.request.TuitionFeeCreationRequest;
 import com.quocdoansam.schoolsystem.dto.response.StudentResponse;
 import com.quocdoansam.schoolsystem.entity.Major;
 import com.quocdoansam.schoolsystem.entity.Student;
@@ -43,24 +44,44 @@ public class StudentService {
 	MajorRepository majorRepository;
 	@Autowired
 	PasswordEncoder passwordEncoder;
+	@Autowired
+	TuitionFeeService tuitionFeeService;
 
 	public StudentResponse create(StudentCreationRequest request) {
 		Student student = studentMapper.toStudentCreationRequest(request);
 
 		// Add major
-		Major major = majorRepository.findById(request.getMajorId())
-				.orElseThrow(() -> new RuntimeException("Major not found with id = " + request.getMajorId()));
+		Major major = findMajorById(request.getMajorId());
 		student.setMajor(major);
 
 		// Add roles
-		Set<String> roles = new HashSet<>();
-		roles.add(Role.STUDENT.name());
-		student.setRoles(roles);
+		student.setRoles(Set.of(Role.STUDENT.name()));
 
 		// Password cryption
 		student.setPassword(passwordEncoder.encode(student.getPassword()));
 
-		return studentMapper.toStudentResponse(studentRepository.save(student));
+		// Save student
+		Student savedStudent = studentRepository.save(student);
+
+		// Add tuition fees
+		createTuitionFeeForStudent(savedStudent, major.getTuitionFees());
+
+		return studentMapper.toStudentResponse(savedStudent);
+	}
+
+	private Major findMajorById(String majorId) {
+		return majorRepository.findById(majorId)
+				.orElseThrow(() -> new BaseException(ErrorMessage.MAJOR_NOT_FOUND));
+	}
+
+	private void createTuitionFeeForStudent(Student student, BigDecimal amount) {
+		log.info("STUDENT ID: {}", student.getId());
+		TuitionFeeCreationRequest feeRequest = TuitionFeeCreationRequest.builder()
+				.studentId(student.getId())
+				.amount(amount)
+				.paid(false)
+				.build();
+		tuitionFeeService.create(feeRequest);
 	}
 
 	public StudentResponse getById(Long id) {
