@@ -22,7 +22,9 @@ public enum ErrorMessage {
     WRONG_CREDENTIALS(HttpStatus.UNAUTHORIZED, "Wrong username or password. Try again."),
     INVALID_ROLE_SPECIFIED(HttpStatus.BAD_REQUEST, "Invalid role specified."),
     UNSUPPORTED_ROLE(HttpStatus.NOT_ACCEPTABLE, "Unsupport role."),
-    USER_NOT_FOUND(HttpStatus.NOT_FOUND, "The user not found.");
+    USER_NOT_FOUND(HttpStatus.NOT_FOUND, "The user not found."),
+    MAJOR_NOT_FOUND(HttpStatus.NOT_FOUND, "The major not found."),
+    ;
 
     HttpStatus status;
     String message;

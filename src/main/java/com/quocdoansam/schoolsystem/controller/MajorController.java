@@ -13,14 +13,16 @@ import com.quocdoansam.schoolsystem.service.MajorService;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
-@RequestMapping("/api/admin")
+@RequestMapping("/api")
 public class MajorController {
     @Autowired
     MajorService majorService;
 
-    @PostMapping("/majors")
+    @PostMapping("/admin/majors")
     public ResponseEntity<BaseResponse<MajorResponse>> create(@RequestBody MajorCreationRequest request) {
         MajorResponse majorResponse = majorService.create(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(
@@ -29,6 +31,18 @@ public class MajorController {
                         .statusCode(HttpStatus.CREATED.value())
                         .message("Major created successfully.")
                         .data(majorResponse)
+                        .build());
+    }
+
+    @GetMapping("/public/majors/{id}")
+    public ResponseEntity<BaseResponse<MajorResponse>> getMajorById(@PathVariable String id) {
+        MajorResponse tuitionFees = majorService.getMajorById(id);
+        return ResponseEntity.ok(
+                BaseResponse.<MajorResponse>builder()
+                        .success(true)
+                        .statusCode(HttpStatus.OK.value())
+                        .message("Get major successfully.")
+                        .data(tuitionFees)
                         .build());
     }
 
