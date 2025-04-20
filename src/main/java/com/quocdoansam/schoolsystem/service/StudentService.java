@@ -48,6 +48,11 @@ public class StudentService {
 	TuitionFeeService tuitionFeeService;
 
 	public StudentResponse create(StudentCreationRequest request) {
+
+		// Validation
+		checkEmail(request.getEmail());
+		checkPhoneNumber(request.getPhoneNumber());
+
 		Student student = studentMapper.toStudentCreationRequest(request);
 
 		// Add major
@@ -67,6 +72,18 @@ public class StudentService {
 		createTuitionFeeForStudent(savedStudent, major.getTuitionFees());
 
 		return studentMapper.toStudentResponse(savedStudent);
+	}
+
+	void checkEmail(String email) {
+		if (studentRepository.existsByEmail(email)) {
+			throw new BaseException(ErrorMessage.EMAIL_EXISTED);
+		}
+	}
+
+	void checkPhoneNumber(String phone) {
+		if (studentRepository.existsByPhoneNumber(phone)) {
+			throw new BaseException(ErrorMessage.PHONE_NUMBER_EXISTED);
+		}
 	}
 
 	private Major findMajorById(String majorId) {
