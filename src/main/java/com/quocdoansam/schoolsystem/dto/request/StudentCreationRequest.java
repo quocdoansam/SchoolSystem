@@ -28,5 +28,5 @@ public class StudentCreationRequest {
 	String phoneNumber;
 
 	@NotNull(message = "The major is required.")
-	Long majorId;
+	String majorId;
 }
