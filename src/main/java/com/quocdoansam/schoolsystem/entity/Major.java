@@ -48,5 +48,5 @@ public class Major {
 	LocalDateTime createdAt;
 
 	@OneToMany(mappedBy = "major", cascade = CascadeType.PERSIST, orphanRemoval = false)
-	private List<Student> students;
+	List<Student> students;
 }
