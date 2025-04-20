@@ -45,7 +45,11 @@ public abstract class User {
 	String gender;
 	String hometown;
 	String address;
+
+	@Column(unique = true)
 	String phoneNumber;
+
+	@Column(unique = true)
 	String email;
 	Set<String> roles;
 
