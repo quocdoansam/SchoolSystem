@@ -15,52 +15,54 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @Slf4j
+@RequestMapping("/api")
 public class StudentController {
-    @Autowired
-    private StudentService studentService;
+        @Autowired
+        private StudentService studentService;
 
-    @PostMapping("/admin/students")
-    ResponseEntity<BaseResponse<StudentResponse>> create(@RequestBody @Valid StudentCreationRequest request) {
-        StudentResponse studentResponse = studentService.create(request);
-        return ResponseEntity.status(
-                HttpStatus.CREATED).body(
-                        BaseResponse.<StudentResponse>builder()
-                                .success(true)
-                                .statusCode(HttpStatus.CREATED.value())
-                                .message("Student created successfully.")
-                                .data(studentResponse)
-                                .build());
+        @PostMapping("/admin/student")
+        ResponseEntity<BaseResponse<StudentResponse>> create(@RequestBody @Valid StudentCreationRequest request) {
+                StudentResponse studentResponse = studentService.create(request);
+                return ResponseEntity.status(
+                                HttpStatus.CREATED).body(
+                                                BaseResponse.<StudentResponse>builder()
+                                                                .success(true)
+                                                                .statusCode(HttpStatus.CREATED.value())
+                                                                .message("Student created successfully.")
+                                                                .data(studentResponse)
+                                                                .build());
 
-    };
+        };
 
-    @GetMapping("/admin/students")
-    public ResponseEntity<BaseResponse<List<StudentResponse>>> getAll() {
-        List<StudentResponse> studentResponses = studentService.getAll();
-        return ResponseEntity.ok(
-                BaseResponse.<List<StudentResponse>>builder()
-                        .success(true)
-                        .statusCode(HttpStatus.OK.value())
-                        .message("Get all students successfully.")
-                        .data(studentResponses)
-                        .build());
-    }
+        @GetMapping("/admin/student")
+        public ResponseEntity<BaseResponse<List<StudentResponse>>> getAll() {
+                List<StudentResponse> studentResponses = studentService.getAll();
+                return ResponseEntity.ok(
+                                BaseResponse.<List<StudentResponse>>builder()
+                                                .success(true)
+                                                .statusCode(HttpStatus.OK.value())
+                                                .message("Get all students successfully.")
+                                                .data(studentResponses)
+                                                .build());
+        }
 
-    @GetMapping("/students/{id}")
-    public ResponseEntity<BaseResponse<StudentResponse>> getById(@PathVariable Long id) {
-        StudentResponse studentResponse = studentService.getById(id);
-        return ResponseEntity.ok(
-                BaseResponse.<StudentResponse>builder()
-                        .success(true)
-                        .statusCode(HttpStatus.OK.value())
-                        .message("Get student successfully.")
-                        .data(studentResponse)
-                        .build());
-    }
+        @GetMapping("/student/{id}")
+        public ResponseEntity<BaseResponse<StudentResponse>> getById(@PathVariable Long id) {
+                StudentResponse studentResponse = studentService.getById(id);
+                return ResponseEntity.ok(
+                                BaseResponse.<StudentResponse>builder()
+                                                .success(true)
+                                                .statusCode(HttpStatus.OK.value())
+                                                .message("Get student successfully.")
+                                                .data(studentResponse)
+                                                .build());
+        }
 
 }

@@ -1,7 +1,8 @@
 server:
-  port: 8080
-  servlet:
-    context-path: /school
+  port: 9000
+  error:
+    whitelabel:
+      enabled: false
 
 spring:
   datasource:
@@ -12,7 +13,6 @@ spring:
   web:
     resources:
       add-mappings: false
-
   jpa:
     hibernate:
       ddl-auto: update
@@ -20,17 +20,17 @@ spring:
     show-sql: true
     properties:
       hibernate:
-        format_sql: true
-        use_sql_comments: true
+        "[format_sql]": true
+        "[use_sql_comments]": true
         jdbc:
-          time_zone: Asia/Ho_Chi_Minh
+          "[time_zone]": Asia/Ho_Chi_Minh
         dialect: org.hibernate.dialect.MySQL8Dialect
 
 logging:
   level:
-    org.springframework.web: DEBUG
-    org.hibernate.SQL: DEBUG
-    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    "[org.springframework.web]": DEBUG
+    "[org.hibernate.SQL]": DEBUG
+    "[org.hibernate.type.descriptor.sql.BasicBinder]": TRACE
 
 jwt:
-  signerKey: "I=yRmvXsAk==mOiTDifCFPI0BDE?sXJrubqhRaO6ZKHvu5bz!yq!ySbcheYlKG!3"
+  signer-key: "this-is-a-secret-key-it-would-be-bad-if-you-public-it"
