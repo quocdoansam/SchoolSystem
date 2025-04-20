@@ -8,7 +8,7 @@ import com.quocdoansam.schoolsystem.dto.request.TuitionFeeCreationRequest;
 import com.quocdoansam.schoolsystem.dto.response.TuitionFeeResponse;
 import com.quocdoansam.schoolsystem.entity.TuitionFee;
 
-@Mapper(componentModel = "spring", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+@Mapper(componentModel = "spring", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE, uses = {})
 public interface TuitionFeeMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "student", ignore = true)
