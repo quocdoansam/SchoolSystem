@@ -9,8 +9,8 @@ import com.quocdoansam.schoolsystem.entity.Student;
 import com.quocdoansam.schoolsystem.entity.TuitionFee;
 import com.quocdoansam.schoolsystem.enums.ErrorMessage;
 import com.quocdoansam.schoolsystem.exception.BaseException;
+import com.quocdoansam.schoolsystem.mapper.TuitionFeeMapper;
 import com.quocdoansam.schoolsystem.repository.StudentRepository;
-import com.quocdoansam.schoolsystem.repository.TuitionFeeMapper;
 import com.quocdoansam.schoolsystem.repository.TuitionFeeRepository;
 
 @Service
@@ -20,10 +20,10 @@ public class TuitionFeeService {
     TuitionFeeRepository tuitionFeeRepository;
 
     @Autowired
-    TuitionFeeMapper tuitionFeeMapper;
+    StudentRepository studentRepository;
 
     @Autowired
-    StudentRepository studentRepository;
+    TuitionFeeMapper tuitionFeeMapper;
 
     TuitionFeeService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;

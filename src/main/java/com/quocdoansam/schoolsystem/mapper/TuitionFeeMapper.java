@@ -1,4 +1,4 @@
-package com.quocdoansam.schoolsystem.repository;
+package com.quocdoansam.schoolsystem.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
