@@ -20,7 +20,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-@Table(name = "tuition_fee")
+@Table(name = "tuition_fees")
 @Entity
 @Data
 @NoArgsConstructor
@@ -29,19 +29,19 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class TuitionFee {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Long id;
-	
+	@GeneratedValue(strategy = GenerationType.UUID)
+	String id;
+
 	@OneToOne
 	@JoinColumn(name = "student_id", unique = true)
 	Student student;
-	
-	BigDecimal amountUnpaid;
-	BigDecimal amountPaid;
-	
+
+	BigDecimal amount;
+	boolean paid;
+
 	@UpdateTimestamp
 	LocalDateTime updatedAt;
-	
+
 	@CreationTimestamp
 	LocalDateTime createdAt;
 }
