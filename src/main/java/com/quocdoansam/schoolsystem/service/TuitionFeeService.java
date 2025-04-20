@@ -33,10 +33,13 @@ public class TuitionFeeService {
         Student student = studentRepository.findById(request.getStudentId())
                 .orElseThrow(() -> new BaseException(ErrorMessage.STUDENT_NOT_FOUND));
 
-        request.setStudentId(student.getId());
-        TuitionFee tuitionFee = tuitionFeeMapper.toTuitionFeeCreationRequest(request);
+        TuitionFee fee = TuitionFee.builder()
+                .student(student)
+                .amount(request.getAmount())
+                .paid(request.getPaid() != null ? request.getPaid() : false)
+                .build();
 
-        TuitionFee savedFee = tuitionFeeRepository.save(tuitionFee);
+        TuitionFee savedFee = tuitionFeeRepository.save(fee);
         return tuitionFeeMapper.toTuitionFeeResponse(savedFee);
     }
 
