@@ -24,7 +24,7 @@ public enum ErrorMessage {
     UNSUPPORTED_ROLE(HttpStatus.NOT_ACCEPTABLE, "Unsupport role."),
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "The user not found."),
     MAJOR_NOT_FOUND(HttpStatus.NOT_FOUND, "The major not found."),
-    ;
+    PHONE_NUMBER_EXISTED(HttpStatus.BAD_REQUEST, "The phone number has existed.");
 
     HttpStatus status;
     String message;
