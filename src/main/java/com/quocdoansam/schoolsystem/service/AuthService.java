@@ -63,7 +63,7 @@ public class AuthService {
 
         JWTClaimsSet jwtClaimsSet = new JWTClaimsSet.Builder()
                 .subject(user.getName())
-                .issuer("WalletX")
+                .issuer("School")
                 .issueTime(new Date())
                 .expirationTime(Date.from(Instant.now().plus(1, ChronoUnit.HOURS)))
                 .claim("scope", buildScope(user))
