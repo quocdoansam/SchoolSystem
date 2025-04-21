@@ -24,7 +24,8 @@ public enum ErrorMessage {
     UNSUPPORTED_ROLE(HttpStatus.NOT_ACCEPTABLE, "Unsupport role."),
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "The user not found."),
     MAJOR_NOT_FOUND(HttpStatus.NOT_FOUND, "The major not found."),
-    PHONE_NUMBER_EXISTED(HttpStatus.BAD_REQUEST, "The phone number has existed.");
+    PHONE_NUMBER_EXISTED(HttpStatus.BAD_REQUEST, "The phone number has existed."),
+    CANNOT_DELETE(HttpStatus.INTERNAL_SERVER_ERROR, "Found an error during deletion. Please try again.");
 
     HttpStatus status;
     String message;
