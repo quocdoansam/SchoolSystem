@@ -12,14 +12,14 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    void checkEmail(String mail) {
-        if (userRepository.existsByEmail(mail)) {
+    void checkEmail(String email) {
+        if (email != null && userRepository.existsByEmail(email)) {
             throw new BaseException(ErrorMessage.EMAIL_EXISTED);
         }
     }
 
     void checkPhoneNumber(String phoneNumber) {
-        if (userRepository.existsByPhoneNumber(phoneNumber)) {
+        if (phoneNumber != null && userRepository.existsByPhoneNumber(phoneNumber)) {
             throw new BaseException(ErrorMessage.PHONE_NUMBER_EXISTED);
         }
     }
