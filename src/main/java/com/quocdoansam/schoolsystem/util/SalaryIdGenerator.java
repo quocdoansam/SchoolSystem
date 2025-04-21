@@ -12,7 +12,7 @@ public class SalaryIdGenerator implements IdentifierGenerator {
     @SuppressWarnings("deprecation")
     @Override
     public Serializable generate(SharedSessionContractImplementor session, Object obj) throws HibernateException {
-        String query = "SELECT MAX(m.id) FROM Major m";
+        String query = "SELECT MAX(s.id) FROM Salary s";
         String maxId = (String) session.createQuery(query).uniqueResult();
 
         int nextId = 1;

@@ -30,7 +30,7 @@ import lombok.experimental.FieldDefaults;
 public class Salary {
     @Id
     @GeneratedValue(generator = "salary-id-generator")
-    @GenericGenerator(name = "salaru-id-generator", strategy = "com.quocdoansam.schoolSystem.util.SalaryIdGenerator")
+    @GenericGenerator(name = "salary-id-generator", strategy = "com.quocdoansam.schoolsystem.util.SalaryIdGenerator")
     String id;
 
     BigDecimal amount;
