@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.quocdoansam.schoolsystem.dto.request.StudentCreationRequest;
+import com.quocdoansam.schoolsystem.dto.request.StudentUpdateRequest;
 import com.quocdoansam.schoolsystem.dto.request.TuitionFeeCreationRequest;
 import com.quocdoansam.schoolsystem.dto.response.StudentResponse;
 import com.quocdoansam.schoolsystem.entity.Major;
@@ -82,7 +83,6 @@ public class StudentService {
 	}
 
 	private void createTuitionFeeForStudent(Student student, BigDecimal amount) {
-		log.info("STUDENT ID: {}", student.getId());
 		TuitionFeeCreationRequest feeRequest = TuitionFeeCreationRequest.builder()
 				.studentId(student.getId())
 				.amount(amount)
@@ -102,5 +102,32 @@ public class StudentService {
 				.stream()
 				.map(studentMapper::toStudentResponse)
 				.toList();
+	}
+
+	public Student findById(Long id) {
+		return studentRepository.findById(id)
+				.orElseThrow(() -> new BaseException(ErrorMessage.STUDENT_NOT_FOUND));
+	}
+
+	public StudentResponse update(Long id, StudentUpdateRequest request) {
+		Student student = findById(id);
+		student = studentMapper.toStudentUpdateRequest(request, student);
+		return studentMapper.toStudentResponse(studentRepository.save(student));
+	}
+
+	public void deleteById(Long id) {
+		try {
+			studentRepository.deleteById(id);
+		} catch (RuntimeException exception) {
+			throw new BaseException(ErrorMessage.CANNOT_DELETE);
+		}
+	}
+
+	public void deleteAll() {
+		try {
+			studentRepository.deleteAll();
+		} catch (RuntimeException exception) {
+			throw new BaseException(ErrorMessage.CANNOT_DELETE);
+		}
 	}
 }
