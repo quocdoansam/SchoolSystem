@@ -46,12 +46,14 @@ public class StudentService {
 	PasswordEncoder passwordEncoder;
 	@Autowired
 	TuitionFeeService tuitionFeeService;
+	@Autowired
+	UserService userService;
 
 	public StudentResponse create(StudentCreationRequest request) {
 
 		// Validation
-		checkEmail(request.getEmail());
-		checkPhoneNumber(request.getPhoneNumber());
+		userService.checkEmail(request.getEmail());
+		userService.checkPhoneNumber(request.getPhoneNumber());
 
 		Student student = studentMapper.toStudentCreationRequest(request);
 
@@ -72,18 +74,6 @@ public class StudentService {
 		createTuitionFeeForStudent(savedStudent, major.getTuitionFees());
 
 		return studentMapper.toStudentResponse(savedStudent);
-	}
-
-	void checkEmail(String email) {
-		if (studentRepository.existsByEmail(email)) {
-			throw new BaseException(ErrorMessage.EMAIL_EXISTED);
-		}
-	}
-
-	void checkPhoneNumber(String phone) {
-		if (studentRepository.existsByPhoneNumber(phone)) {
-			throw new BaseException(ErrorMessage.PHONE_NUMBER_EXISTED);
-		}
 	}
 
 	private Major findMajorById(String majorId) {
