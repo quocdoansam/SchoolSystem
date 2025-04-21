@@ -1,5 +1,6 @@
 package com.quocdoansam.schoolsystem.service;
 
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.quocdoansam.schoolsystem.dto.request.TeacherCreationRequest;
+import com.quocdoansam.schoolsystem.dto.request.TeacherUpdateRequest;
 import com.quocdoansam.schoolsystem.dto.response.TeacherResponse;
 import com.quocdoansam.schoolsystem.entity.Teacher;
 import com.quocdoansam.schoolsystem.enums.ErrorMessage;
@@ -48,8 +50,45 @@ public class TeacherService {
     }
 
     public TeacherResponse getById(Long id) {
-        Teacher teacher = teacherRepository.findById(id)
-                .orElseThrow(() -> new BaseException(ErrorMessage.TEACHER_NOT_FOUND));
+        Teacher teacher = findById(id);
         return teacherMapper.toTeacherResponse(teacher);
+    }
+
+    public List<TeacherResponse> getAll() {
+        return teacherRepository.findAll()
+                .stream()
+                .map(teacherMapper::toTeacherResponse)
+                .toList();
+    }
+
+    public TeacherResponse updateById(Long id, TeacherUpdateRequest request) {
+        userService.checkEmail(request.getEmail());
+        userService.checkPhoneNumber(request.getPhoneNumber());
+
+        Teacher teacher = findById(id);
+        teacher = teacherMapper.toTeacherUpdateRequest(request, teacher);
+
+        return teacherMapper.toTeacherResponse(teacherRepository.save(teacher));
+    }
+
+    public void deleteById(Long id) {
+        try {
+            teacherRepository.deleteById(id);
+        } catch (RuntimeException ex) {
+            throw new BaseException(ErrorMessage.CANNOT_DELETE);
+        }
+    }
+
+    public void deleteAll() {
+        try {
+            teacherRepository.deleteAll();
+        } catch (RuntimeException ex) {
+            throw new BaseException(ErrorMessage.CANNOT_DELETE);
+        }
+    }
+
+    private Teacher findById(Long id) {
+        return teacherRepository.findById(id)
+                .orElseThrow(() -> new BaseException(ErrorMessage.TEACHER_NOT_FOUND));
     }
 }
