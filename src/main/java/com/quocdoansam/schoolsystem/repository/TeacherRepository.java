@@ -7,7 +7,5 @@ import com.quocdoansam.schoolsystem.entity.Teacher;
 
 @Repository
 public interface TeacherRepository extends JpaRepository<Teacher, Long> {
-    Boolean existsByEmail(String emaul);
 
-    Boolean existsByPhoneNumber(String phoneNumber);
 }
