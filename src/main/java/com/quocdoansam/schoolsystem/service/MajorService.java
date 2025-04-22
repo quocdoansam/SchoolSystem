@@ -27,4 +27,9 @@ public class MajorService {
         return majorRepository.findById(id).map(majorMapper::toMajorResponse)
                 .orElseThrow(() -> new BaseException(ErrorMessage.MAJOR_NOT_FOUND));
     }
+
+    public Major findById(String id) {
+        return majorRepository.findById(id)
+                .orElseThrow(() -> new BaseException(ErrorMessage.MAJOR_NOT_FOUND));
+    }
 }
