@@ -87,7 +87,7 @@ public class TeacherService {
         }
     }
 
-    private Teacher findById(Long id) {
+    public Teacher findById(Long id) {
         return teacherRepository.findById(id)
                 .orElseThrow(() -> new BaseException(ErrorMessage.TEACHER_NOT_FOUND));
     }
