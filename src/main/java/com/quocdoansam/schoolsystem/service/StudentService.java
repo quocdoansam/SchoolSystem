@@ -19,7 +19,6 @@ import com.quocdoansam.schoolsystem.enums.ErrorMessage;
 import com.quocdoansam.schoolsystem.enums.Role;
 import com.quocdoansam.schoolsystem.exception.BaseException;
 import com.quocdoansam.schoolsystem.mapper.StudentMapper;
-import com.quocdoansam.schoolsystem.repository.MajorRepository;
 import com.quocdoansam.schoolsystem.repository.StudentRepository;
 
 import lombok.AccessLevel;
@@ -42,7 +41,7 @@ public class StudentService {
 	@Autowired
 	StudentMapper studentMapper;
 	@Autowired
-	MajorRepository majorRepository;
+	MajorService majorService;
 	@Autowired
 	PasswordEncoder passwordEncoder;
 	@Autowired
@@ -59,7 +58,7 @@ public class StudentService {
 		Student student = studentMapper.toStudentCreationRequest(request);
 
 		// Add major
-		Major major = findMajorById(request.getMajorId());
+		Major major = majorService.findById(request.getMajorId());
 		student.setMajor(major);
 
 		// Add roles
@@ -75,11 +74,6 @@ public class StudentService {
 		createTuitionFeeForStudent(savedStudent, major.getTuitionFees());
 
 		return studentMapper.toStudentResponse(savedStudent);
-	}
-
-	private Major findMajorById(String majorId) {
-		return majorRepository.findById(majorId)
-				.orElseThrow(() -> new BaseException(ErrorMessage.MAJOR_NOT_FOUND));
 	}
 
 	private void createTuitionFeeForStudent(Student student, BigDecimal amount) {
@@ -110,8 +104,19 @@ public class StudentService {
 	}
 
 	public StudentResponse update(Long id, StudentUpdateRequest request) {
+		// Validation
+		userService.checkEmail(request.getEmail());
+		userService.checkPhoneNumber(request.getPhoneNumber());
+
+		// Get student
 		Student student = findById(id);
 		student = studentMapper.toStudentUpdateRequest(request, student);
+
+		// Get and set major
+		Major major = majorService.findById(request.getMajorId());
+		student.setMajor(major);
+
+		// Return and save student
 		return studentMapper.toStudentResponse(studentRepository.save(student));
 	}
 
