@@ -28,9 +28,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 @RequestMapping("/api")
 public class StudentController {
         @Autowired
-        private StudentService studentService;
+        StudentService studentService;
 
-        @PostMapping("/admin/student")
+        @PostMapping("/admin/students")
         ResponseEntity<BaseResponse<StudentResponse>> create(@RequestBody @Valid StudentCreationRequest request) {
                 StudentResponse studentResponse = studentService.create(request);
                 return ResponseEntity.status(
@@ -44,7 +44,7 @@ public class StudentController {
 
         };
 
-        @GetMapping("/admin/student")
+        @GetMapping("/admin/students")
         public ResponseEntity<BaseResponse<List<StudentResponse>>> getAll() {
                 List<StudentResponse> studentResponses = studentService.getAll();
                 return ResponseEntity.ok(
@@ -56,7 +56,7 @@ public class StudentController {
                                                 .build());
         }
 
-        @GetMapping("/student/{id}")
+        @GetMapping("/students/{id}")
         public ResponseEntity<BaseResponse<StudentResponse>> getById(@PathVariable Long id) {
                 StudentResponse studentResponse = studentService.getById(id);
                 return ResponseEntity.ok(
@@ -92,7 +92,7 @@ public class StudentController {
                                                 .build());
         }
 
-        @DeleteMapping("/students/{id}")
+        @DeleteMapping("/admin/students")
         public ResponseEntity<BaseResponse<?>> deleteAllStudent(@PathVariable Long id) {
                 studentService.deleteAll();
                 return ResponseEntity.ok(
