@@ -25,7 +25,10 @@ public enum ErrorMessage {
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "The user not found."),
     MAJOR_NOT_FOUND(HttpStatus.NOT_FOUND, "The major not found."),
     PHONE_NUMBER_EXISTED(HttpStatus.BAD_REQUEST, "The phone number has existed."),
-    CANNOT_DELETE(HttpStatus.INTERNAL_SERVER_ERROR, "Found an error during deletion. Please try again.");
+    CANNOT_DELETE(HttpStatus.INTERNAL_SERVER_ERROR, "Found an error during deletion. Please try again."),
+    PAYROLL_EXISTED(HttpStatus.BAD_REQUEST, "Salary for this teacher already existed."),
+    INVALID_SALARY_STATUS(HttpStatus.BAD_REQUEST,
+            "Invalid salary status, accepted values are: PENDING, APPROVED, PAID or REJECTED.");
 
     HttpStatus status;
     String message;
