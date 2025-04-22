@@ -122,7 +122,8 @@ public class StudentService {
 
 	public void deleteById(Long id) {
 		try {
-			studentRepository.deleteById(id);
+			Student student = findById(id);
+			studentRepository.deleteById(student.getId());
 		} catch (RuntimeException exception) {
 			throw new BaseException(ErrorMessage.CANNOT_DELETE);
 		}
