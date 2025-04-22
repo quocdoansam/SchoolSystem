@@ -2,11 +2,15 @@ package com.quocdoansam.schoolsystem.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.YearMonth;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.quocdoansam.schoolsystem.converter.YearMonthAttributeConverter;
+
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -33,11 +37,14 @@ public class Salary {
     @GenericGenerator(name = "salary-id-generator", strategy = "com.quocdoansam.schoolsystem.util.SalaryIdGenerator")
     String id;
 
+    @Convert(converter = YearMonthAttributeConverter.class)
+    YearMonth monthSalary;
+
     BigDecimal amount;
     Boolean paid;
 
     @ManyToOne
-    @JoinColumn(name = "teacher_id", unique = true)
+    @JoinColumn(name = "teacher_id")
     Teacher teacher;
 
     @UpdateTimestamp
