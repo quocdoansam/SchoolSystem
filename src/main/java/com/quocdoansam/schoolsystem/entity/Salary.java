@@ -51,11 +51,8 @@ public class Salary {
     @Column(nullable = false)
     BigDecimal baseAmount;
 
-    @Builder.Default
-    BigDecimal bonus = BigDecimal.ZERO;
-
-    @Builder.Default
-    BigDecimal deduction = BigDecimal.ZERO;
+    BigDecimal bonus;
+    BigDecimal deduction;
 
     @Column(nullable = false)
     BigDecimal totalAmount;
@@ -63,8 +60,7 @@ public class Salary {
     @Column(nullable = false)
     SalaryStatus status;
 
-    @Builder.Default
-    String note = "No note yet";
+    String note;
 
     @ManyToOne
     @JoinColumn(name = "teacher_id", nullable = false)
