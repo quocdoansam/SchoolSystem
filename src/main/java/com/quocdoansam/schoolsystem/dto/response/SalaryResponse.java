@@ -1,6 +1,9 @@
 package com.quocdoansam.schoolsystem.dto.response;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+
+import com.quocdoansam.schoolsystem.enums.SalaryStatus;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -16,9 +19,16 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class SalaryResponse {
     String id;
-    String teacherId;
-    String amount;
-    String paid;
+    Long teacherId;
+    String teacherName;
+    BigDecimal baseAmount;
+    BigDecimal bonus;
+    BigDecimal deduction;
+    BigDecimal totalAmount;
+    SalaryStatus status;
+    String note;
+    String updatedBy;
+    String createdBy;
     LocalDateTime updatedAt;
     LocalDateTime createdAt;
 }

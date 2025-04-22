@@ -2,6 +2,8 @@ package com.quocdoansam.schoolsystem.dto.request;
 
 import java.math.BigDecimal;
 
+import com.quocdoansam.schoolsystem.enums.SalaryStatus;
+
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -18,7 +20,13 @@ import lombok.experimental.FieldDefaults;
 public class SalaryCreationRequest {
     @NotNull(message = "The teacher ID is required.")
     Long teacherId;
+    BigDecimal baseAmount;
 
-    BigDecimal amount;
-    Boolean paid;
+    @Builder.Default
+    BigDecimal bonus = BigDecimal.ZERO;
+
+    @Builder.Default
+    BigDecimal deduction = BigDecimal.ZERO;
+    SalaryStatus status;
+    String note;
 }
