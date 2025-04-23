@@ -24,12 +24,6 @@ public interface SalaryMapper {
     @Mapping(target = "monthSalary", ignore = true)
     Salary toSalaryCreationRequest(SalaryCreationRequest request);
 
-    default BigDecimal calculateTotal(SalaryCreationRequest req) {
-        BigDecimal bonus = req.getBonus() != null ? req.getBonus() : BigDecimal.ZERO;
-        BigDecimal deduction = req.getDeduction() != null ? req.getDeduction() : BigDecimal.ZERO;
-        return req.getBaseAmount().add(bonus).subtract(deduction);
-    }
-
     @Mapping(target = "teacherId", source = "teacher.id")
     @Mapping(target = "teacherName", source = "teacher.name")
     SalaryResponse toSalaryResponse(Salary salary);
@@ -42,4 +36,16 @@ public interface SalaryMapper {
     @Mapping(target = "teacher", ignore = true)
     @Mapping(target = "totalAmount", expression = "java(calculateTotal(request))")
     Salary toSalaryUpdateRequest(SalaryUpdateRequest request, @MappingTarget Salary salary);
+
+    default BigDecimal calculateTotal(SalaryCreationRequest req) {
+        BigDecimal bonus = req.getBonus() != null ? req.getBonus() : BigDecimal.ZERO;
+        BigDecimal deduction = req.getDeduction() != null ? req.getDeduction() : BigDecimal.ZERO;
+        return req.getBaseAmount().add(bonus).subtract(deduction);
+    }
+
+    default BigDecimal calculateTotal(SalaryUpdateRequest req) {
+        BigDecimal bonus = req.getBonus() != null ? req.getBonus() : BigDecimal.ZERO;
+        BigDecimal deduction = req.getDeduction() != null ? req.getDeduction() : BigDecimal.ZERO;
+        return req.getBaseAmount().add(bonus).subtract(deduction);
+    }
 }
