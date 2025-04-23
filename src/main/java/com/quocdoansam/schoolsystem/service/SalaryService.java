@@ -66,6 +66,12 @@ public class SalaryService {
                 .toList();
     }
 
+    public SalaryResponse getSalaryByTeacherAndMonth(Long id, YearMonth yearMonth) {
+        Teacher teacher = teacherService.findById(id);
+        Salary salary = salaryRepository.findByMonthSalaryAndTeacher(yearMonth, teacher);
+        return salaryMapper.toSalaryResponse(salary);
+    }
+
     public List<SalaryResponse> getSalaryByMonth(YearMonth yearMonth) {
         // if the year month is null, get salary by current month.
         if (yearMonth == null) {

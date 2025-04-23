@@ -16,4 +16,6 @@ public interface SalaryRepository extends JpaRepository<Salary, String> {
     public List<Salary> findByTeacher(Teacher teacher);
 
     public List<Salary> findByMonthSalary(YearMonth monthSalary);
+
+    public Salary findByMonthSalaryAndTeacher(YearMonth monthSalary, Teacher teacher);
 }
