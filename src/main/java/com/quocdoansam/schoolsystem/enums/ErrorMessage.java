@@ -28,7 +28,8 @@ public enum ErrorMessage {
     CANNOT_DELETE(HttpStatus.INTERNAL_SERVER_ERROR, "Found an error during deletion. Please try again."),
     PAYROLL_EXISTED(HttpStatus.BAD_REQUEST, "Salary for this teacher already existed."),
     INVALID_SALARY_STATUS(HttpStatus.BAD_REQUEST,
-            "Invalid salary status, accepted values are: PENDING, APPROVED, PAID or REJECTED.");
+            "Invalid salary status, accepted values are: PENDING, APPROVED, PAID or REJECTED."),
+    SALARY_NOT_FOUND(HttpStatus.NOT_FOUND, "Salary not found.");
 
     HttpStatus status;
     String message;
