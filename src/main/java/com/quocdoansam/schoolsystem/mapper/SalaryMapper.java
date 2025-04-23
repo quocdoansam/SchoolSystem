@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
 import com.quocdoansam.schoolsystem.dto.request.SalaryCreationRequest;
@@ -40,5 +41,5 @@ public interface SalaryMapper {
     @Mapping(target = "updatedBy", ignore = true)
     @Mapping(target = "teacher", ignore = true)
     @Mapping(target = "totalAmount", expression = "java(calculateTotal(request))")
-    Salary toSalaryUpdateRequest(SalaryUpdateRequest request);
+    Salary toSalaryUpdateRequest(SalaryUpdateRequest request, @MappingTarget Salary salary);
 }
