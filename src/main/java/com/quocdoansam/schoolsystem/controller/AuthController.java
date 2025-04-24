@@ -29,7 +29,7 @@ public class AuthController {
         AuthResponse authResponse = authService.authenticate(request);
 
         Cookie cookie = new Cookie("access_token", authResponse.getToken());
-        cookie.setHttpOnly(true); // Important: Not allowed JavaScript to read
+        cookie.setHttpOnly(false); // Important: Not allowed JavaScript to read
         cookie.setSecure(true); // Only send cookie through HTTPS (Enable while production)
         cookie.setPath("/");
         cookie.setMaxAge(60 * 60 * 24 * 30); // 30 days
@@ -46,5 +46,4 @@ public class AuthController {
                         .data(authResponse)
                         .build());
     }
-
 }
