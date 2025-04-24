@@ -13,4 +13,3 @@ public class JpaConfig {
         return new AuditorAwareImpl();
     }
 }
-// Bug

@@ -30,16 +30,12 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         String token = extractTokenFromCookie(request);
-        log.info("TOKEN: {}", token);
         if (token != null) {
             try {
                 Jwt jwt = jwtDecoder.decode(token);
-                log.info("TOKEN DECODED: {}", jwt);
                 Authentication authentication = jwtAuthenticationConverter.convert(jwt);
-                log.info("AUTHENTICATION: {}", authentication);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             } catch (Exception e) {
-                log.info("EXCEPTION: {}", e.getMessage());
                 SecurityContextHolder.clearContext();
             }
         }
