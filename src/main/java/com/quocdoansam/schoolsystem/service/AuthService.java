@@ -3,9 +3,16 @@ package com.quocdoansam.schoolsystem.service;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -17,6 +24,7 @@ import com.nimbusds.jose.JWSObject;
 import com.nimbusds.jose.Payload;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jwt.JWTClaimsSet;
+import com.quocdoansam.schoolsystem.config.UserPrincipal;
 import com.quocdoansam.schoolsystem.dto.request.AuthRequest;
 import com.quocdoansam.schoolsystem.dto.response.AuthResponse;
 import com.quocdoansam.schoolsystem.entity.User;
@@ -51,7 +59,25 @@ public class AuthService {
             throw new BaseException(ErrorMessage.WRONG_CREDENTIALS);
         }
 
-        var token = generateToken(user);
+        String token = generateToken(user);
+
+        Set<String> roles = user.getRoles();
+        List<GrantedAuthority> authorities = roles.stream()
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
+
+        UserPrincipal principal = new UserPrincipal(
+                user.getId(),
+                user.getName(),
+                user.getPassword(),
+                roles, authorities);
+
+        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                principal,
+                null,
+                authorities);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
         return AuthResponse.builder()
                 .token(token)
                 .authenticated(true)
@@ -67,6 +93,7 @@ public class AuthService {
                 .issueTime(new Date())
                 .expirationTime(Date.from(Instant.now().plus(1, ChronoUnit.HOURS)))
                 .claim("scope", buildScope(user))
+                .claim("id", user.getId())
                 .build();
 
         Payload payload = new Payload(jwtClaimsSet.toJSONObject());
