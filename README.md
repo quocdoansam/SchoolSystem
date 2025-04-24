@@ -6,21 +6,21 @@
 - Learn **Spring Security**.
 - Understand how the school system works.
 ## Features
-- Login with ID and password.
-- See news from school.
-- View personal information.
-- Update personal information.
-- Enroll in the subject.
-- Updating ...
-## Tech use
+- [x] Login with ID and password.
+- [x] See news from school.
+- [x] View personal information.
+- [x] Update personal information.
+- [x] Enroll in the subject.
+- [ ] Updating ...
+## Tech Stack
 - Maven
 - Spring Boot
 - Spring Security
 - Lombok
 - Mapstruct
 - Spring validation
-## Install local
-### 1. Clone this repo
+## Getting Started
+### 1. Clone the repository
 ```bash
 git clone https://github.com/quocdoansam/school-system-backend.git
 ```
@@ -32,3 +32,5 @@ mvn clean install
 ```bash
 mvn spring-boot:run
 ```
+
+
