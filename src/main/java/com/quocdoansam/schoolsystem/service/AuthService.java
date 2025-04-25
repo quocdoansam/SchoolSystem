@@ -30,7 +30,6 @@ import com.quocdoansam.schoolsystem.dto.response.AuthResponse;
 import com.quocdoansam.schoolsystem.entity.User;
 import com.quocdoansam.schoolsystem.enums.ErrorMessage;
 import com.quocdoansam.schoolsystem.exception.BaseException;
-import com.quocdoansam.schoolsystem.repository.UserRepository;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -43,7 +42,7 @@ import lombok.extern.slf4j.Slf4j;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
 public class AuthService {
-    UserRepository userRepo;
+    UserService userService;
     PasswordEncoder passwordEncoder;
 
     @NonFinal
@@ -51,8 +50,7 @@ public class AuthService {
     String SIGNER_KEY;
 
     public AuthResponse authenticate(AuthRequest request) {
-        var user = userRepo.findById(request.getId())
-                .orElseThrow(() -> new BaseException(ErrorMessage.WRONG_CREDENTIALS));
+        var user = userService.findById(request.getId());
 
         boolean authenticated = passwordEncoder.matches(request.getPassword(), user.getPassword());
         if (!authenticated) {
@@ -68,9 +66,8 @@ public class AuthService {
 
         UserPrincipal principal = new UserPrincipal(
                 user.getId(),
-                user.getName(),
-                user.getPassword(),
-                roles, authorities);
+                user.getEmail(),
+                roles);
 
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                 principal,

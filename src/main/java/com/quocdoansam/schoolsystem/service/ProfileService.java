@@ -7,9 +7,17 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.quocdoansam.schoolsystem.config.UserPrincipal;
+import com.quocdoansam.schoolsystem.entity.Major;
+import com.quocdoansam.schoolsystem.entity.Student;
+import com.quocdoansam.schoolsystem.entity.Teacher;
+import com.quocdoansam.schoolsystem.mapper.StudentMapper;
+import com.quocdoansam.schoolsystem.mapper.TeacherMapper;
 import com.quocdoansam.schoolsystem.repository.UserRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class ProfileService {
     @Autowired
     UserRepository userRepository;
@@ -17,6 +25,12 @@ public class ProfileService {
     StudentService studentService;
     @Autowired
     TeacherService teacherService;
+    @Autowired
+    StudentMapper studentMapper;
+    @Autowired
+    MajorService majorService;
+    @Autowired
+    TeacherMapper teacherMapper;
 
     public Object me() {
         UserPrincipal user = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -24,9 +38,14 @@ public class ProfileService {
         Set<String> roles = user.getRoles();
 
         if (roles.contains("STUDENT")) {
-            return studentService.findById(userId);
+            Student student = studentService.findById(userId);
+            Major major = majorService.findById(student.getMajor().getId());
+            student.setMajor(major);
+
+            return studentMapper.toStudentResponse(student);
         } else if (roles.contains("TEACHER")) {
-            return teacherService.findById(userId);
+            Teacher teacher = teacherService.findById(userId);
+            return teacherMapper.toTeacherResponse(teacher);
         } else {
             return userRepository.findById(userId);
         }
