@@ -7,7 +7,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -24,7 +23,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     @Autowired
     JwtDecoder jwtDecoder;
     @Autowired
-    JwtAuthenticationConverter jwtAuthenticationConverter;
+    CustomJwtAuthenticationConverter jwtAuthenticationConverter;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
