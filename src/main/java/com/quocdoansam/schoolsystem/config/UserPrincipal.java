@@ -23,6 +23,7 @@ import lombok.experimental.FieldDefaults;
 public class UserPrincipal implements UserDetails {
     String id;
     String email;
+    String name;
     Set<String> roles;
 
     @Override

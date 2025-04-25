@@ -67,6 +67,7 @@ public class AuthService {
         UserPrincipal principal = new UserPrincipal(
                 user.getId(),
                 user.getEmail(),
+                user.getName(),
                 roles);
 
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(

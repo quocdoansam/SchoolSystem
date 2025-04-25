@@ -16,25 +16,26 @@ import org.springframework.security.oauth2.jwt.Jwt;
 @Configuration
 public class CustomJwtAuthenticationConverter implements Converter<Jwt, AbstractAuthenticationToken> {
 
-    @Override
-    public AbstractAuthenticationToken convert(Jwt jwt) {
-        String id = jwt.getClaim("id");
+        @Override
+        public AbstractAuthenticationToken convert(Jwt jwt) {
+                String id = jwt.getClaim("id");
+                String email = jwt.getClaim("sub");
+                String name = jwt.getClaim("name");
+                
+                // Get scope like: ["STUDENT", "TEACHER"]
+                List<String> roles = List.of(jwt.getClaimAsString("scope").split(" "));
 
-        String email = jwt.getClaim("sub");
-        List<String> roles = jwt.getClaimAsString("scope") != null
-                ? List.of(jwt.getClaimAsString("scope").split(" "))
-                : List.of();
+                Set<GrantedAuthority> authorities = roles.stream()
+                                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.toUpperCase()))
+                                .collect(Collectors.toSet());
 
-        Set<GrantedAuthority> authorities = roles.stream()
-                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.toUpperCase()))
-                .collect(Collectors.toSet());
+                UserPrincipal principal = UserPrincipal.builder()
+                                .id(id)
+                                .email(email)
+                                .name(name)
+                                .roles(new HashSet<>(roles))
+                                .build();
 
-        UserPrincipal principal = UserPrincipal.builder()
-                .id(id)
-                .email(email)
-                .roles(new HashSet<>(roles))
-                .build();
-
-        return new UsernamePasswordAuthenticationToken(principal, null, authorities);
-    }
+                return new UsernamePasswordAuthenticationToken(principal, null, authorities);
+        }
 }
