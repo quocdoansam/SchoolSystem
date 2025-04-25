@@ -44,7 +44,7 @@ public class SalaryController {
     }
 
     @GetMapping("/salaries")
-    public ResponseEntity<BaseResponse<SalaryResponse>> getSalaryByTeacherAndMonth(@RequestParam Long teacherId,
+    public ResponseEntity<BaseResponse<SalaryResponse>> getSalaryByTeacherAndMonth(@RequestParam String teacherId,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM") YearMonth month) {
         SalaryResponse salaryResponse = salaryService.getSalaryByTeacherAndMonth(teacherId, month);
         return ResponseEntity.ok(

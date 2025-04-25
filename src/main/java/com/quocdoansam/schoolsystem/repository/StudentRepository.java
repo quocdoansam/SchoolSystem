@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.quocdoansam.schoolsystem.entity.Student;
 
 @Repository
-public interface StudentRepository extends JpaRepository<Student, Long> {
+public interface StudentRepository extends JpaRepository<Student, String> {
 	Boolean existsByEmail(String email);
 
 	Boolean existsByPhoneNumber(String phoneNumber);

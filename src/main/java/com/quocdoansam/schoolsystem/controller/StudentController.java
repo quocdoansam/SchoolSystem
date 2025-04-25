@@ -57,7 +57,7 @@ public class StudentController {
         }
 
         @GetMapping("/students/{id}")
-        public ResponseEntity<BaseResponse<StudentResponse>> getById(@PathVariable Long id) {
+        public ResponseEntity<BaseResponse<StudentResponse>> getById(@PathVariable String id) {
                 StudentResponse studentResponse = studentService.getById(id);
                 return ResponseEntity.ok(
                                 BaseResponse.<StudentResponse>builder()
@@ -69,7 +69,7 @@ public class StudentController {
         }
 
         @PutMapping("/students/{id}")
-        public ResponseEntity<BaseResponse<StudentResponse>> update(@PathVariable Long id,
+        public ResponseEntity<BaseResponse<StudentResponse>> update(@PathVariable String id,
                         @RequestBody StudentUpdateRequest request) {
                 StudentResponse studentResponse = studentService.update(id, request);
                 return ResponseEntity.ok(
@@ -82,7 +82,7 @@ public class StudentController {
         }
 
         @DeleteMapping("/students/{id}")
-        public ResponseEntity<BaseResponse<?>> deleteById(@PathVariable Long id) {
+        public ResponseEntity<BaseResponse<?>> deleteById(@PathVariable String id) {
                 studentService.deleteById(id);
                 return ResponseEntity.ok(
                                 BaseResponse.builder()
@@ -93,7 +93,7 @@ public class StudentController {
         }
 
         @DeleteMapping("/admin/students")
-        public ResponseEntity<BaseResponse<?>> deleteAllStudent(@PathVariable Long id) {
+        public ResponseEntity<BaseResponse<?>> deleteAllStudent(@PathVariable String id) {
                 studentService.deleteAll();
                 return ResponseEntity.ok(
                                 BaseResponse.builder()

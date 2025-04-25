@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.quocdoansam.schoolsystem.entity.Teacher;
 
 @Repository
-public interface TeacherRepository extends JpaRepository<Teacher, Long> {
+public interface TeacherRepository extends JpaRepository<Teacher, String> {
 
 }

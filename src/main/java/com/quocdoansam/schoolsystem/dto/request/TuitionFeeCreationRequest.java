@@ -15,7 +15,7 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class TuitionFeeCreationRequest {
-    Long studentId;
+    String studentId;
     BigDecimal amount;
     Boolean paid;
 }

@@ -19,7 +19,7 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class SalaryResponse {
     String id;
-    Long teacherId;
+    String teacherId;
     String teacherName;
     BigDecimal baseAmount;
     BigDecimal bonus;

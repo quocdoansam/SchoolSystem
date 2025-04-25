@@ -25,7 +25,7 @@ public class UserService {
         }
     }
 
-    User findById(Long id) {
+    User findById(String id) {
         return userRepository.findById(id).orElseThrow(() -> new BaseException(ErrorMessage.USER_NOT_FOUND));
     }
 }

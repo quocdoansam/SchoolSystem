@@ -7,13 +7,12 @@ import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.id.IdentifierGenerator;
 
-public class TeacherIdGenerator implements IdentifierGenerator {
-    private static final String PREFIX = "GV" + Year.now().getValue();
+public class UserIdGenerator implements IdentifierGenerator {
+    private static final String PREFIX = "EDURA" + Year.now().getValue();
 
-    @SuppressWarnings("deprecation")
     @Override
     public Serializable generate(SharedSessionContractImplementor session, Object obj) throws HibernateException {
-        String query = "SELECT MAX(t.id) FROM Teacher t";
+        String query = "SELECT MAX(u.id) FROM User u";
         String maxId = (String) session.createQuery(query).uniqueResult();
 
         int nextId = 1;

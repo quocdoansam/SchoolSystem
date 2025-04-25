@@ -19,7 +19,7 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class SalaryCreationRequest {
     @NotNull(message = "The teacher ID is required.")
-    Long teacherId;
+    String teacherId;
     BigDecimal baseAmount;
 
     @Builder.Default

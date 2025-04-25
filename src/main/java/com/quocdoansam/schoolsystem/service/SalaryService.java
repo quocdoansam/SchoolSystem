@@ -58,7 +58,7 @@ public class SalaryService {
                 .orElseThrow(() -> new BaseException(ErrorMessage.SALARY_NOT_FOUND));
     }
 
-    public List<SalaryResponse> getSalaryByTeacherId(Long id) {
+    public List<SalaryResponse> getSalaryByTeacherId(String id) {
         Teacher teacher = teacherService.findById(id);
         return salaryRepository.findByTeacher(teacher)
                 .stream()
@@ -66,7 +66,7 @@ public class SalaryService {
                 .toList();
     }
 
-    public SalaryResponse getSalaryByTeacherAndMonth(Long id, YearMonth yearMonth) {
+    public SalaryResponse getSalaryByTeacherAndMonth(String id, YearMonth yearMonth) {
         Teacher teacher = teacherService.findById(id);
         Salary salary = salaryRepository.findByMonthSalaryAndTeacher(yearMonth, teacher);
         return salaryMapper.toSalaryResponse(salary);

@@ -49,7 +49,7 @@ public class TeacherService {
         return teacherMapper.toTeacherResponse(teacherRepository.save(teacher));
     }
 
-    public TeacherResponse getById(Long id) {
+    public TeacherResponse getById(String id) {
         Teacher teacher = findById(id);
         return teacherMapper.toTeacherResponse(teacher);
     }
@@ -61,7 +61,7 @@ public class TeacherService {
                 .toList();
     }
 
-    public TeacherResponse updateById(Long id, TeacherUpdateRequest request) {
+    public TeacherResponse updateById(String id, TeacherUpdateRequest request) {
         userService.checkEmail(request.getEmail());
         userService.checkPhoneNumber(request.getPhoneNumber());
 
@@ -71,7 +71,7 @@ public class TeacherService {
         return teacherMapper.toTeacherResponse(teacherRepository.save(teacher));
     }
 
-    public void deleteById(Long id) {
+    public void deleteById(String id) {
         try {
             teacherRepository.deleteById(id);
         } catch (RuntimeException ex) {
@@ -87,8 +87,8 @@ public class TeacherService {
         }
     }
 
-    public Teacher findById(Long id) {
-        return teacherRepository.findById(id)
+    public Teacher findById(String userId) {
+        return teacherRepository.findById(userId)
                 .orElseThrow(() -> new BaseException(ErrorMessage.TEACHER_NOT_FOUND));
     }
 }

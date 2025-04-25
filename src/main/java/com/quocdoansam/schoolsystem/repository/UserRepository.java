@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.quocdoansam.schoolsystem.entity.User;
 import java.util.List;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, String> {
     List<User> findByName(String name);
 
     Boolean existsByEmail(String email);

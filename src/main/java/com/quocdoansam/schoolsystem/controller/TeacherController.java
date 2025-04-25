@@ -40,7 +40,7 @@ public class TeacherController {
     }
 
     @GetMapping("/teachers/{id}")
-    public ResponseEntity<BaseResponse<TeacherResponse>> getById(@PathVariable Long id) {
+    public ResponseEntity<BaseResponse<TeacherResponse>> getById(@PathVariable String id) {
 
         TeacherResponse teacherResponse = teacherService.getById(id);
         return ResponseEntity.ok(
@@ -65,7 +65,7 @@ public class TeacherController {
     }
 
     @PutMapping("/teachers/{id}")
-    public ResponseEntity<BaseResponse<TeacherResponse>> update(@PathVariable Long id,
+    public ResponseEntity<BaseResponse<TeacherResponse>> update(@PathVariable String id,
             @RequestBody TeacherUpdateRequest request) {
         TeacherResponse teacherResponse = teacherService.updateById(id, request);
 
@@ -79,7 +79,7 @@ public class TeacherController {
     }
 
     @DeleteMapping("/teachers/{id}")
-    public ResponseEntity<BaseResponse<?>> deleteTeacherById(@PathVariable Long id) {
+    public ResponseEntity<BaseResponse<?>> deleteTeacherById(@PathVariable String id) {
         teacherService.deleteById(id);
         return ResponseEntity.ok(
                 BaseResponse.builder()

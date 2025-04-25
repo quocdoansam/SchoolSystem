@@ -24,5 +24,5 @@ public class SalaryUpdateRequest {
     BigDecimal deduction;
     SalaryStatus status;
     String note;
-    Long teacherId;
+    String teacherId;
 }

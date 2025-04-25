@@ -16,7 +16,7 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class AuthRequest {
     @Size(min = 2, message = "The ID is required.")
-    Long id;
+    String id;
     @NotBlank(message = "The password is required.")
     String password;
 }

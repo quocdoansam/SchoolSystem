@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.quocdoansam.schoolsystem.entity.Admin;
 
 @Repository
-public interface AdminRepository extends JpaRepository<Admin, Long> {
+public interface AdminRepository extends JpaRepository<Admin, String> {
 
 }

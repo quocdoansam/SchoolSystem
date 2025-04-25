@@ -85,7 +85,7 @@ public class StudentService {
 		tuitionFeeService.create(feeRequest);
 	}
 
-	public StudentResponse getById(Long id) {
+	public StudentResponse getById(String id) {
 		return studentMapper.toStudentResponse(
 				studentRepository.findById(id)
 						.orElseThrow(() -> new BaseException(ErrorMessage.STUDENT_NOT_FOUND)));
@@ -98,12 +98,12 @@ public class StudentService {
 				.toList();
 	}
 
-	public Student findById(Long id) {
+	public Student findById(String id) {
 		return studentRepository.findById(id)
 				.orElseThrow(() -> new BaseException(ErrorMessage.STUDENT_NOT_FOUND));
 	}
 
-	public StudentResponse update(Long id, StudentUpdateRequest request) {
+	public StudentResponse update(String id, StudentUpdateRequest request) {
 		// Validation
 		userService.checkEmail(request.getEmail());
 		userService.checkPhoneNumber(request.getPhoneNumber());
@@ -120,7 +120,7 @@ public class StudentService {
 		return studentMapper.toStudentResponse(studentRepository.save(student));
 	}
 
-	public void deleteById(Long id) {
+	public void deleteById(String id) {
 		try {
 			Student student = findById(id);
 			studentRepository.deleteById(student.getId());

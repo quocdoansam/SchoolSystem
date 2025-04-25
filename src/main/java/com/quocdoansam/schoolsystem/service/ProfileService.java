@@ -34,7 +34,7 @@ public class ProfileService {
 
     public Object me() {
         UserPrincipal user = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Long userId = user.getId();
+        String userId = user.getId();
         Set<String> roles = user.getRoles();
 
         if (roles.contains("STUDENT")) {

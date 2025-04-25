@@ -85,12 +85,13 @@ public class AuthService {
         JWSHeader header = new JWSHeader(JWSAlgorithm.HS256);
 
         JWTClaimsSet jwtClaimsSet = new JWTClaimsSet.Builder()
-                .subject(user.getName())
-                .issuer("School")
+                .subject(user.getEmail())
+                .issuer("Edura")
                 .issueTime(new Date())
                 .expirationTime(Date.from(Instant.now().plus(1, ChronoUnit.HOURS)))
-                .claim("scope", buildScope(user))
                 .claim("id", user.getId())
+                .claim("scope", buildScope(user))
+                .claim("name", user.getName())
                 .build();
 
         Payload payload = new Payload(jwtClaimsSet.toJSONObject());

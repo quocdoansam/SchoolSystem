@@ -21,7 +21,7 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserPrincipal implements UserDetails {
-    Long id;
+    String id;
     String email;
     Set<String> roles;
 

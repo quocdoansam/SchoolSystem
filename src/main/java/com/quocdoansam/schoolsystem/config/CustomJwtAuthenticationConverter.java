@@ -18,8 +18,7 @@ public class CustomJwtAuthenticationConverter implements Converter<Jwt, Abstract
 
     @Override
     public AbstractAuthenticationToken convert(Jwt jwt) {
-        Object idObj = jwt.getClaim("id");
-        Long id = idObj instanceof Integer ? ((Integer) idObj).longValue() : (Long) idObj;
+        String id = jwt.getClaim("id");
 
         String email = jwt.getClaim("sub");
         List<String> roles = jwt.getClaimAsString("scope") != null
