@@ -9,6 +9,8 @@ import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -31,6 +33,7 @@ import com.quocdoansam.schoolsystem.entity.User;
 import com.quocdoansam.schoolsystem.enums.ErrorMessage;
 import com.quocdoansam.schoolsystem.exception.BaseException;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -113,5 +116,17 @@ public class AuthService {
             user.getRoles().forEach(stringJoiner::add);
         }
         return stringJoiner.toString();
+    }
+
+    public void logout(HttpServletResponse response) {
+        ResponseCookie cookie = ResponseCookie.from("access_token", "")
+                .httpOnly(true)
+                .secure(true)
+                .path("/")
+                .maxAge(0)
+                .sameSite("Strict")
+                .build();
+
+        response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
     }
 }
