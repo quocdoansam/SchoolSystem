@@ -10,6 +10,7 @@ import org.hibernate.id.IdentifierGenerator;
 public class UserIdGenerator implements IdentifierGenerator {
     private static final String PREFIX = "EDURA" + Year.now().getValue();
 
+    @SuppressWarnings("deprecation")
     @Override
     public Serializable generate(SharedSessionContractImplementor session, Object obj) throws HibernateException {
         String query = "SELECT MAX(u.id) FROM User u";

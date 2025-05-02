@@ -31,6 +31,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public abstract class User {
+	@SuppressWarnings("deprecation")
 	@Id
 	@GeneratedValue(generator = "user-id-generator")
 	@GenericGenerator(name = "user-id-generator", strategy = "com.quocdoansam.schoolsystem.util.UserIdGenerator")

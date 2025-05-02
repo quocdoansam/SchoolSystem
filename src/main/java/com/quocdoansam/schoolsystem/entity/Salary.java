@@ -40,6 +40,7 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @EntityListeners(AuditingEntityListener.class)
 public class Salary {
+    @SuppressWarnings("deprecation")
     @Id
     @GeneratedValue(generator = "salary-id-generator")
     @GenericGenerator(name = "salary-id-generator", strategy = "com.quocdoansam.schoolsystem.util.SalaryIdGenerator")

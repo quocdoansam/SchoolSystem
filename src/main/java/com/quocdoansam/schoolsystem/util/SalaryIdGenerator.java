@@ -10,6 +10,7 @@ import org.hibernate.id.IdentifierGenerator;
 public class SalaryIdGenerator implements IdentifierGenerator {
     private static final String PREFIX = "SA" + Year.now().getValue();
 
+    @SuppressWarnings("deprecation")
     @Override
     public Serializable generate(SharedSessionContractImplementor session, Object obj) throws HibernateException {
         String query = "SELECT MAX(s.id) FROM Salary s";

@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,11 +18,11 @@ import org.springframework.security.oauth2.jwt.Jwt;
 public class CustomJwtAuthenticationConverter implements Converter<Jwt, AbstractAuthenticationToken> {
 
         @Override
-        public AbstractAuthenticationToken convert(Jwt jwt) {
+        public AbstractAuthenticationToken convert(@NonNull Jwt jwt) {
                 String id = jwt.getClaim("id");
                 String email = jwt.getClaim("sub");
                 String name = jwt.getClaim("name");
-                
+
                 // Get scope like: ["STUDENT", "TEACHER"]
                 List<String> roles = List.of(jwt.getClaimAsString("scope").split(" "));
 

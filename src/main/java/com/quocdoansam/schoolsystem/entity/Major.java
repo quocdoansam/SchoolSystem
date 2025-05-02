@@ -30,6 +30,7 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Major {
+	@SuppressWarnings("deprecation")
 	@Id
 	@GeneratedValue(generator = "major-id-generator")
 	@GenericGenerator(name = "major-id-generator", strategy = "com.quocdoansam.schoolsystem.util.MajorIdGenerator")

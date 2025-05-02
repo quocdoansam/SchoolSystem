@@ -3,6 +3,7 @@ package com.quocdoansam.schoolsystem.config;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -26,7 +27,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     CustomJwtAuthenticationConverter jwtAuthenticationConverter;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+    protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
+            @NonNull FilterChain filterChain)
             throws ServletException, IOException {
         String token = extractTokenFromCookie(request);
         if (token != null) {
